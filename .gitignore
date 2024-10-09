@@ -1,0 +1,33 @@
+<<<<<<< HEAD
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.env
+=======
+.DS_Store
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+
+node_modules/
+rasi10-hotel-test-vue/node_modules/
+C:\GIT\assignment02-nicole-avila\rasi10-hotel-test-vue\node_modules\
+>>>>>>> main

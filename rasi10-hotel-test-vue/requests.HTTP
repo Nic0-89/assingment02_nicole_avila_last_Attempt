@@ -1,0 +1,75 @@
+### POST REQUEST TO GET AN ACCESS TOKEN
+POST http://localhost:3000/api/login
+content-type: application/json
+
+{
+    "username": "tester01",
+	"password": "GteteqbQQgSr88SwNExUQv2ydb7xuf8c"
+    
+}
+
+### GET REQUEST TO RETRIEVE ALL CLIENTS
+GET http://localhost:3000/api/clients 
+content-type: application/json
+accept: application/json
+body: null
+x-user-auth:{ "username": "tester01", "token": "cd8087a03b15d27cbb6c6c38f003be40"}
+
+##
+GET http://localhost:3000/posts
+
+### POST login 
+###
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "username": "tester01",
+    "password": "GteteqbQQgSr88SwNExUQv2ydb7xuf8c"
+}
+
+###
+GET http://localhost:3000/api/clients
+Content-Type: application/json
+X-user-auth: {"username":"tester01", "token": "b15cad234a8985b1c408fefce1f5b0cd"}
+
+### PUT
+PUT http://localhost:3000/api/clients/2
+Content-Type: application/json
+X-user-auth: {"username":"tester01", "token": "6dd5b3db421e945f0eb2958899b3534a"}
+ {
+    "created": "2020-01-05T12:00:00.000Z",
+    "name": "Jonaselado Hellman",
+    "email": "jonas.hellman@example.com",
+    "telephone": "070 000 0001"
+  }
+
+
+
+POST http://localhost:3000/api/clients/
+Content-Type: application/json
+{
+ 
+  "first_name": "Pexxzcxzte",
+  "last_name": "Bozxczxcrg",
+  "email": "pbzxczxcorg2@smugmug.com"
+}
+
+### PUT /clients/(ID)
+###
+PUT http://localhost:3000/api/clients/2
+Content-Type: application/json
+{
+ 
+  "first_name": "Pexxzcxz",
+  "last_name": "Bozxczxcrg",
+  "email": "pbzxczxcorg2@smugmug.com"
+}
+
+### DELETE /clients/(ID)
+###
+DELETE http://localhost:3000/api/clients/2
+Content-Type: application/json
+X-user-auth: {"username":"tester01", "token": "c86c9574c06398d47acd681a6313c24f"}
+
+
