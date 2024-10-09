@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { Console } from 'console';
-//import { createToken } from '../server/helper';
-const BASE_URL = 'http://localhost:3000/';
+import { createToken } from '../server/helper';
+const BASE_URL = 'http://localhost:3000/api';
 
 
 test.describe('Test suite backend V1', () => {
   let tokenValue: ""
   test.beforeEach('Test case 01 - Login ', async ({ request }) => {
 
-    const responseLoging = await request.post("http://localhost:3000/api/login", {
+    const responseLoging = await request.post(`${BASE_URL}/login`, {
       data: {
         username: "tester01",
         password: "GteteqbQQgSr88SwNExUQv2ydb7xuf8c"
@@ -46,7 +46,7 @@ test.describe('Test suite backend V1', () => {
   // Verify the status code is 201 Created.
 
   test('Test case 03 - Create room with POST', async ({ request }) => {
-
+    expect(tokenValue).toBeTruthy();
     var getPostsResponse = await request.post('http://localhost:3000/api/room/new', {
       headers: {
         'X-user-auth': JSON.stringify({
@@ -64,12 +64,13 @@ test.describe('Test suite backend V1', () => {
         price: 2000
       }
     });
-    expect(getPostsResponse.status()).toBe(200); //it shouldn be 201??
+    expect(getPostsResponse.status()).toBe(200); //it shouldn be 201 for created??
     const room = await getPostsResponse.json();
     expect(room).toHaveProperty('floor');
   });
 
   test('Test case 04 - Get all rooms', async ({ request }) => {
+    expect(tokenValue).toBeTruthy();
 
     var getRoomsResponse = await request.get('http://localhost:3000/api/rooms', {
       headers: {
@@ -90,11 +91,12 @@ test.describe('Test suite backend V1', () => {
   // Verify that the status code is 201 Created.
 
   test('Test case 05 - Create Client with POST', async ({ request }) => {
+    expect(tokenValue).toBeTruthy();
+
     const newClient = {
-      name: "John Doe",           // Replace with actual client data
-      email: "john.doe@example.com",
-      phone: "123-456-7890",
-      address: "123 Elm Street",
+      name: "Alan Walker",           email: "alan.walker@yo.com",
+      phone: "222-333-444",
+      address: "123 Yo Street",
     };
     var getclientResponse = await request.post('http://localhost:3000/api/client/new', {
       headers: {
@@ -148,15 +150,13 @@ test('Test case 06 - Create Reservation with POST', async ({ request }) => {
 
 });
 
-
-
-// 4. Edit Room Details (PUT)
-// Send a PUT request to update the room's details (e.g., modify price).
+// 7 Edit Room Details (PUT)
+// Send a PUT request to update the room's details
 // Verify the status code is 200 OK.
 test('Test case 07 - Edit Room with PUT', async ({ request }) => {
   expect(tokenValue).toBeTruthy();
 
-  // Data to update the room - adjust as needed for your API
+  // Data to update the room
   const data = {
     number: 222,
     price: 2500
@@ -174,18 +174,15 @@ test('Test case 07 - Edit Room with PUT', async ({ request }) => {
     data: data
   });
 
-  // Check for a successful response status
+
   const room = await putRoomResponse.json();
   expect(putRoomResponse.status()).toBe(200); // 
   expect(room).toHaveProperty('Category'); // 
 });
 
-
 // 8. Delete a Reservation (DELETE)
 // Send a DELETE request to remove a reservation.
 // Verify the status code is 204 No Content.
-
-
 
 test('Test case 08 - Delete Room with delete', async ({ request }) => {
   expect(tokenValue).toBeTruthy();
@@ -205,11 +202,11 @@ test('Test case 08 - Delete Room with delete', async ({ request }) => {
   expect(retrieveRoom.status()).toBe(404)
 });
 
-//DELETE request to remove a client.
+//9 DELETE request to remove a client.
 // Verify the status code is 204 No Content.
 // Confirm that the client has been deleted by trying to fetch it again (status 404).
 
-test('DELETE request to remove a client', async ({ request }) => {
+test('Test case 08 - DELETE request to remove a client', async ({ request }) => {
   const clientId = 1; 
   const deleteResponse = await request.delete(`http://localhost:3000/api/client/${clientId}`);
 
@@ -221,7 +218,6 @@ test('DELETE request to remove a client', async ({ request }) => {
   expect(fetchResponse.status()).toBe(404);
 
 });
-
 
 // 10 Edit Client Information (PUT)
 // Send a PUT request to update the client's information.
@@ -249,7 +245,8 @@ test('Edit client information (PUT)', async ({ request }) => {
   // new data matches?
   expect(fetchedClientData.name).toBe(updatedClientData.name);
   expect(fetchedClientData.email).toBe(updatedClientData.email);
-  // Add assertions for other fields as needed
+  expect(fetchedClientData.telephone).toBe(updatedClientData.telephone);
+
 
 });
 });
