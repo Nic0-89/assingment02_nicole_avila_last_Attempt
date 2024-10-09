@@ -205,26 +205,51 @@ test('Test case 08 - Delete Room with delete', async ({ request }) => {
   expect(retrieveRoom.status()).toBe(404)
 });
 
-});
-
-
-// 9. Invalid Data for Creating a Room (POST)
-// Description: Test creating a new room with invalid or missing data (e.g., missing price).
-// Send a POST request to create a room but provide invalid data.
-// Verify the status code is 400 Bad Request.
-// Verify the error message or validation response.
-
-// 10. Delete a Client (DELETE)
-// Description: Test deleting a client.
-// Preconditions: Client already exists.
-
-// Send a DELETE request to remove a client.
+//DELETE request to remove a client.
 // Verify the status code is 204 No Content.
 // Confirm that the client has been deleted by trying to fetch it again (status 404).
 
+test('DELETE request to remove a client', async ({ request }) => {
+  const clientId = 1; 
+  const deleteResponse = await request.delete(`http://localhost:3000/api/client/${clientId}`);
+
+  //status code is 204 No Content?
+  expect(deleteResponse.status()).toBe(204);
+
+  const fetchResponse = await request.get(`http://localhost:3000/api/client/${clientId}`);
+  //status code is 404 Not Found?
+  expect(fetchResponse.status()).toBe(404);
+
+});
 
 
-// 5. Edit Client Information (PUT)
+// 10 Edit Client Information (PUT)
 // Send a PUT request to update the client's information.
 // Verify the status code is 200 OK.
 // Fetch the client info and verify the update.
+test('Edit client information (PUT)', async ({ request }) => {
+  const clientId = 1;
+
+  const updatedClientData = {
+    name: "Anya lala",
+    email: "anyanew@123.com",
+    telephone: '070 000 1111'
+  };
+
+  const putResponse = await request.put(`http://localhost:3000/api/client/${clientId}`, {
+    data: updatedClientData,
+  });
+
+  //status code is 200 OK
+  expect(putResponse.status()).toBe(200);
+
+  const fetchResponse = await request.get(`http://localhost:3000/api/client/${clientId}`);
+  const fetchedClientData = await fetchResponse.json();
+
+  // new data matches?
+  expect(fetchedClientData.name).toBe(updatedClientData.name);
+  expect(fetchedClientData.email).toBe(updatedClientData.email);
+  // Add assertions for other fields as needed
+
+});
+});
