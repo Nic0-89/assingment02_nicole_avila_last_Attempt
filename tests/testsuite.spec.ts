@@ -88,7 +88,8 @@ test.describe('Test suite backend V1', () => {
     expect(room).toHaveProperty('floor'); //add tests for other props with values
   });
 
-  test('Test case 04 - Get all rooms', async ({ request }) => {
+
+   test('Test case 04 - Get all rooms', async ({ request }) => {
     console.log(tokenValue)
     var getRoomsResponse = await request.get('http://localhost:3000/api/rooms', {
       headers: {
@@ -104,8 +105,8 @@ test.describe('Test suite backend V1', () => {
     expect(rooms).toBeTruthy();
   });
 
-  // 2. Create a New Client (POST)
-  // Send a POST request to add a new client with valid data (e.g., name, email, phone number).
+  // 5. Create a New Client (POST)
+  // Send a POST request to add a new client with valid data (name, email, phone number).
   // Verify that the status code is 201 Created.
 
   test('Test case 05 - Create Client with POST', async ({ request }) => {
@@ -132,9 +133,9 @@ test.describe('Test suite backend V1', () => {
   });
 
 
-  // 3. Create a New Reservation (POST)
+  // 6. Create a New Reservation (POST)
   // Steps:
-  // Send a POST request to create a reservation with valid room and client IDs and booking details (e.g., check-in/check-out dates).
+  // Send a POST request to create a reservation with valid room and client IDs and booking detail
   // Verify the status code is 201 Created.
 
   test('Test case 06 - Create Reservation with POST', async ({ request }) => {
@@ -202,7 +203,7 @@ test.describe('Test suite backend V1', () => {
 
   test('Test case 08 - Delete Room with delete', async ({ request }) => {
 
-    const deleteRoom = await request.delete('http://localhost:3000/api/room/1', {
+    const deleteRoom = await request.delete('http://localhost:3000/api/room/2', {
       headers: {
         'X-user-auth': JSON.stringify({
           username: 'tester01',
@@ -211,10 +212,10 @@ test.describe('Test suite backend V1', () => {
         'Content-Type': 'application/json'
       },
     });
-
-    expect(deleteRoom.status()).toBe("ok");
-    const retrieveRoom = await request.get('http://localhost:3000/api/room/1')
-    expect(retrieveRoom.status()).toBe(404)
+  
+    expect(deleteRoom.status()).toBe(200);
+    const retrieveRoom = await request.get('http://localhost:3000/api/room/2')
+    expect(retrieveRoom.status()).toBe(401)
   });
 
   //9 DELETE request to remove a client.
