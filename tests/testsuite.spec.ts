@@ -53,9 +53,9 @@ test.describe('Test suite backend V1', () => {
     const rooms = await getPostsResponse.json();
     expect(rooms).toHaveProperty('floor');
     expect(rooms).toHaveProperty('features');
-
-    
-    //maybe add parantesis around
+    expect(typeof rooms.floor).toBe('number');  // is it a number?
+    expect(typeof rooms.category).toBe('string'); 
+    expect(typeof rooms.available).toBe('boolean'); 
     //add some more tests
   });
 
@@ -222,7 +222,7 @@ test.describe('Test suite backend V1', () => {
   // Verify the status code is 204 No Content.
   // Confirm that the client has been deleted by trying to fetch it again (status 404).
 
-  test('Test case 08 - DELETE request to remove a client', async ({ request }) => {
+  test('Test case 09 - DELETE request to remove a client', async ({ request }) => {
     const clientId = 1;
     const deleteResponse = await request.delete(`http://localhost:3000/api/client/${clientId}`);
 
@@ -239,7 +239,7 @@ test.describe('Test suite backend V1', () => {
   // Send a PUT request to update the client's information.
   // Verify the status code is 200 OK.
   // Fetch the client info and verify the update.
-  test('Edit client information (PUT)', async ({ request }) => {
+  test('test case 10 - Edit client information (PUT)', async ({ request }) => {
     const clientId = 1;
 
     const updatedClientData = {
